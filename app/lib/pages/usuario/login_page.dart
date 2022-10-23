@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Text(
                   "Bem vindo",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                     letterSpacing: -1.5,

@@ -1,5 +1,5 @@
 import 'package:app/pages/usuario/login_page.dart';
-import 'package:app/thema/preferencia-tema.dart';
+import 'package:app/theme/preferencia_tema.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,14 +16,14 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     PreferenciaTema.setTema();
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -44,7 +44,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           colorSchemeSeed: Colors.pink,
           brightness: tema,
         ),
-        home: LoginPage(),
+        home: const LoginPage(),
       ),
     );
   }
