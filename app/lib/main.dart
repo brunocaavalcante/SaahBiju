@@ -1,3 +1,4 @@
+import 'package:app/pages/usuario/login_page.dart';
 import 'package:app/thema/preferencia-tema.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           colorSchemeSeed: Colors.pink,
           brightness: tema,
         ),
-        home: const MyHomePage(title: "Werllo"),
+        home: LoginPage(),
       ),
     );
   }
