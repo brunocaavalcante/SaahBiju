@@ -1,3 +1,4 @@
+import 'package:app/pages/usuario/cadastro_user_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -89,10 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    /* Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CadastroUserPage()));*/
+                            builder: (context) => const CadastroUserPage()));
                   },
                   child: const Text("Ainda não tem conta? Cadastre-se agora."),
                 ),
