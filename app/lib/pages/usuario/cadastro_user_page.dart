@@ -1,7 +1,7 @@
 import 'package:app/core/widget_ultil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import '../../core/masks.dart';
 
 class CadastroUserPage extends StatefulWidget {
   const CadastroUserPage({super.key});
@@ -33,14 +33,16 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           child: Column(
             children: [
               SizedBox(height: espaco),
-              returnField("Nome: ", nome, TextInputType.text, ""),
+              returnField("Nome: ", nome, TextInputType.text, null, ""),
               SizedBox(height: espaco),
               returnField("Telefone: ", telefone, TextInputType.phone,
-                  "(xx)XXXXX-XXXX"),
+                  [Masks.telefoneFormatter], "(##) ##### - ####"),
               SizedBox(height: espaco),
-              returnField("Data Nascimento: ", nome, TextInputType.text, ""),
+              returnField("Data Nascimento: ", dataNascimento,
+                  TextInputType.datetime, [Masks.dataFormatter], "##/##/####"),
               SizedBox(height: espaco),
-              returnField("E-mail: ", email, TextInputType.emailAddress, ""),
+              returnField(
+                  "E-mail: ", email, TextInputType.emailAddress, null, ""),
               SizedBox(height: espaco),
               fieldSenha(),
               SizedBox(height: espaco),
@@ -67,11 +69,12 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
   }
 
   Widget returnField(String? label, TextEditingController ctr,
-      TextInputType? type, String? hint) {
+      TextInputType? type, List<MaskTextInputFormatter>? masks, String hint) {
     return TextFormField(
       decoration: InputDecoration(
           labelText: label, border: OutlineInputBorder(), hintText: hint),
       controller: ctr,
+      inputFormatters: masks,
       keyboardType: type,
       validator: (value) {
         if (value!.isEmpty) {
