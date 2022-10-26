@@ -1,7 +1,11 @@
 import 'package:app/core/widget_ultil.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import '../../core/date_ultils.dart';
 import '../../core/masks.dart';
+import '../../models/custom_exception.dart';
+import '../../models/usuario.dart';
+import '../../services/usuario_service.dart';
 
 class CadastroUserPage extends StatefulWidget {
   const CadastroUserPage({super.key});
@@ -50,7 +54,9 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
               SizedBox(height: espaco),
               ElevatedButton(
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {}
+                  if (formKey.currentState!.validate()) {
+                    registrar();
+                  }
                 },
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -66,6 +72,23 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
         ),
       )),
     );
+  }
+
+  registrar() async {
+    try {
+      var usuario = Usuario();
+      usuario.name = nome.text;
+      usuario.telefone = telefone.text;
+      usuario.email = email.text;
+      usuario.senha = senha.text;
+      usuario.confirmSenha = confirmSenha.text;
+      usuario.dataNascimento = DateUltils.stringToDate(dataNascimento.text);
+      await UserService().registrar(usuario);
+      Navigator.pop(context);
+    } on CustomException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
   }
 
   Widget returnField(String? label, TextEditingController ctr,

@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/custom_exception.dart';
+import '../models/usuario.dart';
 
 class UserService extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   User? usuario;
   bool isLoading = true;
@@ -23,6 +26,37 @@ class UserService extends ChangeNotifier {
   _getUser() {
     usuario = auth.currentUser;
     notifyListeners();
+  }
+
+  registrar(Usuario usuario) async {
+    try {
+      UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: usuario.email, password: usuario.senha);
+
+      User? user = result.user;
+      user?.updateDisplayName(usuario.name);
+      user?.updatePhotoURL(usuario.photo);
+      usuario.auth_id = user?.uid;
+
+      if (auth.currentUser != null) {
+        await users.doc(usuario.auth_id).set(usuario.toJson()).catchError(
+            (error) => throw CustomException(
+                "ocorreu um erro ao cadastrar tente novamente"));
+      }
+      _getUser();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw CustomException('A senha é muito fraca!');
+      } else if (e.code == 'email-already-in-use') {
+        throw CustomException('Este email já está cadastrado');
+      } else if (e.code == 'unknown') {
+        throw CustomException('Senha inválida');
+      } else if (e.code == "invalid-email") {
+        throw CustomException('Email inválido!');
+      } else {
+        throw CustomException('Erro ao cadastrar, tente novamente!');
+      }
+    }
   }
 
   login(String email, String senha) async {
