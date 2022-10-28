@@ -1,5 +1,9 @@
 import 'package:app/pages/usuario/cadastro_user_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/custom_exception.dart';
+import '../../services/usuario_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,14 +20,14 @@ class _LoginPageState extends State<LoginPage> {
   bool loading = false;
 
   login() async {
-    /*setState(() => loading = true);
+    setState(() => loading = true);
     try {
       await context.read<UserService>().login(email.text, senha.text);
     } on CustomException catch (e) {
       setState(() => loading = false);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
-    }*/
+    }
   }
 
   @override
@@ -51,9 +55,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 returnInput(email, false, 'Email', TextInputType.emailAddress,
-                    'msgError'),
+                    'Campo Obrigatório!'),
                 returnInput(senha, true, 'Senha', TextInputType.number,
-                    'Informa sua senha!'),
+                    'Campo Obrigatório!'),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: ElevatedButton(

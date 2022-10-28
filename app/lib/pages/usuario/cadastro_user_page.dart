@@ -1,6 +1,7 @@
 import 'package:app/core/widget_ultil.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import '../../core/date_ultils.dart';
 import '../../core/masks.dart';
 import '../../models/custom_exception.dart';
@@ -37,7 +38,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           child: Column(
             children: [
               SizedBox(height: espaco),
-              returnField("Nome: ", nome, TextInputType.text, null, ""),
+              returnField("Nome: ", nome, TextInputType.name, null, ""),
               SizedBox(height: espaco),
               returnField("Telefone: ", telefone, TextInputType.phone,
                   [Masks.telefoneFormatter], "(##) ##### - ####"),
@@ -58,14 +59,15 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
                     registrar();
                   }
                 },
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Icon(Icons.save),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text("Salvar", style: TextStyle(fontSize: 20)),
-                  ),
-                ]),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.save),
+                      Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text("Salvar", style: TextStyle(fontSize: 20)),
+                      ),
+                    ]),
               ),
             ],
           ),
@@ -83,7 +85,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
       usuario.senha = senha.text;
       usuario.confirmSenha = confirmSenha.text;
       usuario.dataNascimento = DateUltils.stringToDate(dataNascimento.text);
-      await UserService().registrar(usuario);
+      await Provider.of<UserService>(context).registrar(usuario);
       Navigator.pop(context);
     } on CustomException catch (e) {
       ScaffoldMessenger.of(context)
@@ -95,7 +97,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
       TextInputType? type, List<MaskTextInputFormatter>? masks, String hint) {
     return TextFormField(
       decoration: InputDecoration(
-          labelText: label, border: OutlineInputBorder(), hintText: hint),
+          labelText: label, border: const OutlineInputBorder(), hintText: hint),
       controller: ctr,
       inputFormatters: masks,
       keyboardType: type,

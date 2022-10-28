@@ -1,12 +1,17 @@
+import 'package:app/core/widgets/auth_check.dart';
 import 'package:app/pages/usuario/login_page.dart';
+import 'package:app/services/usuario_service.dart';
 import 'package:app/theme/preferencia_tema.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const App());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => UserService()),
+  ], child: const App()));
 }
 
 class App extends StatefulWidget {
@@ -47,7 +52,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           colorSchemeSeed: Colors.pink,
           brightness: tema,
         ),
-        home: const LoginPage(),
+        home: const AuthCheck(),
       ),
     );
   }
