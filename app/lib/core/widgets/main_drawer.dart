@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../pages/home_page.dart';
+import '../../pages/produto/home_produto_page.dart';
 import '../../services/usuario_service.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -69,12 +70,8 @@ class _MainDrawerState extends State<MainDrawer> {
                                 fontSize: 14, color: Colors.white),
                           )
                         ])),
-                itemMenu(
-                    "Produtos",
-                    Icons.production_quantity_limits_rounded,
-                    const MyHomePage(
-                      title: '',
-                    )),
+                itemMenu("Produtos", Icons.production_quantity_limits_rounded,
+                    HomeProdutoPage()),
                 itemMenu(
                     "Pedidos",
                     Icons.people_alt,
