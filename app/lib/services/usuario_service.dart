@@ -36,10 +36,10 @@ class UserService extends ChangeNotifier {
       User? user = result.user;
       user?.updateDisplayName(usuario.name);
       user?.updatePhotoURL(usuario.photo);
-      usuario.auth_id = user?.uid;
+      usuario.authId = user?.uid;
 
       if (auth.currentUser != null) {
-        await users.doc(usuario.auth_id).set(usuario.toJson()).catchError(
+        await users.doc(usuario.authId).set(usuario.toJson()).catchError(
             (error) => throw CustomException(
                 "ocorreu um erro ao cadastrar tente novamente"));
       }

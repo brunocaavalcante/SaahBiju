@@ -4,7 +4,7 @@ class Usuario {
   var senha;
   var confirmSenha;
   var telefone;
-  var auth_id;
+  var authId;
   var dataNascimento;
   var id;
   bool? check = false;
