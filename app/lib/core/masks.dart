@@ -10,4 +10,9 @@ class Masks {
       mask: '##/##/####',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
+
+  static var valorFormatter = MaskTextInputFormatter(
+      mask: '',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 }

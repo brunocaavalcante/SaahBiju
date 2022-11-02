@@ -71,7 +71,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           )
                         ])),
                 itemMenu("Produtos", Icons.production_quantity_limits_rounded,
-                    HomeProdutoPage()),
+                    const HomeProdutoPage()),
                 itemMenu(
                     "Pedidos",
                     Icons.people_alt,

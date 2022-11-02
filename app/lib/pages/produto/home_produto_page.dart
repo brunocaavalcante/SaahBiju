@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/widget_ultil.dart';
 import '../../core/widgets/main_drawer.dart';
+import '../../models/produto.dart';
 
 class HomeProdutoPage extends StatefulWidget {
   const HomeProdutoPage({super.key});
@@ -31,8 +32,8 @@ class _HomeProdutoPageState extends State<HomeProdutoPage> {
       ]),
       SizedBox(height: MediaQuery.of(context).size.height * 0.05),
       Row(children: [
-        itenMenu(
-            Icons.new_label, "Cadastrar Produto", const CadastroProdutoPage()),
+        itenMenu(Icons.new_label, "Cadastrar Produto",
+            CadastroProdutoPage(produto: Produto())),
       ])
     ]);
   }

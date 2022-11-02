@@ -38,15 +38,20 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           child: Column(
             children: [
               SizedBox(height: espaco),
-              returnField("Nome: ", nome, TextInputType.name, null, ""),
+              WidgetUltil.returnField(
+                  "Nome: ", nome, TextInputType.name, null, ""),
               SizedBox(height: espaco),
-              returnField("Telefone: ", telefone, TextInputType.phone,
-                  [Masks.telefoneFormatter], "(##) ##### - ####"),
+              WidgetUltil.returnField(
+                  "Telefone: ",
+                  telefone,
+                  TextInputType.phone,
+                  [Masks.telefoneFormatter],
+                  "(##) ##### - ####"),
               SizedBox(height: espaco),
-              returnField("Data Nascimento: ", dataNascimento,
+              WidgetUltil.returnField("Data Nascimento: ", dataNascimento,
                   TextInputType.datetime, [Masks.dataFormatter], "##/##/####"),
               SizedBox(height: espaco),
-              returnField(
+              WidgetUltil.returnField(
                   "E-mail: ", email, TextInputType.emailAddress, null, ""),
               SizedBox(height: espaco),
               fieldSenha(),
@@ -85,29 +90,12 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
       usuario.senha = senha.text;
       usuario.confirmSenha = confirmSenha.text;
       usuario.dataNascimento = DateUltils.stringToDate(dataNascimento.text);
-      await Provider.of<UserService>(context).registrar(usuario);
+      await Provider.of<UserService>(context, listen: false).registrar(usuario);
       Navigator.pop(context);
     } on CustomException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
-  }
-
-  Widget returnField(String? label, TextEditingController ctr,
-      TextInputType? type, List<MaskTextInputFormatter>? masks, String hint) {
-    return TextFormField(
-      decoration: InputDecoration(
-          labelText: label, border: const OutlineInputBorder(), hintText: hint),
-      controller: ctr,
-      inputFormatters: masks,
-      keyboardType: type,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Campo obrigatório";
-        }
-        return null;
-      },
-    );
   }
 
   Widget fieldSenha() {
