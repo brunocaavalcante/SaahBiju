@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/file_service.dart';
 
@@ -65,14 +66,14 @@ class _FileWidgetState extends State<FileWidget> {
     } else {
       destination = "${widget.destino}/${id}";
     }
-
-    task = FileService.uploadFile(destination, file!);
+    task = context.read<FileService>().uploadFile(destination, file!);
 
     if (task == null) return;
 
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     widget.urlImagem = urlDownload;
+    context.read<FileService>().destino = urlDownload;
     setState(() {});
   }
 
@@ -81,8 +82,7 @@ class _FileWidgetState extends State<FileWidget> {
         width: MediaQuery.of(context).size.width * 0.25,
         height: MediaQuery.of(context).size.height * 0.12,
         child: Icon(Icons.add_a_photo,
-            size: 100,
-            color: Theme.of(context).primaryColor.withOpacity(0.85)));
+            size: 100, color: Theme.of(context).hintColor));
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

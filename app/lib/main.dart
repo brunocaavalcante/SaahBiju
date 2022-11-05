@@ -1,4 +1,6 @@
 import 'package:app/core/widgets/auth_check.dart';
+import 'package:app/services/file_service.dart';
+import 'package:app/services/produto_service.dart';
 import 'package:app/services/usuario_service.dart';
 import 'package:app/theme/preferencia_tema.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +12,8 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserService()),
+    ChangeNotifierProvider(create: (context) => ProdutoService()),
+    ChangeNotifierProvider(create: (context) => FileService())
   ], child: const App()));
 }
 

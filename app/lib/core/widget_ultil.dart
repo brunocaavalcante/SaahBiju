@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter/services.dart';
 
 class WidgetUltil {
   static barWithArrowBackIos(BuildContext context, String title) {
@@ -13,7 +13,7 @@ class WidgetUltil {
   }
 
   static Widget returnField(String? label, TextEditingController ctr,
-      TextInputType? type, List<MaskTextInputFormatter>? masks, String hint) {
+      TextInputType? type, List<TextInputFormatter>? masks, String hint) {
     return TextFormField(
       decoration: InputDecoration(
           labelText: label, border: const OutlineInputBorder(), hintText: hint),

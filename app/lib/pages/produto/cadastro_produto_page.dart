@@ -1,7 +1,13 @@
 import 'package:app/core/widget_ultil.dart';
 import 'package:app/core/widgets/file_widget.dart';
 import 'package:app/models/produto.dart';
+import 'package:app/services/file_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import '../../core/currency_input_formatter.dart';
+import '../../models/custom_exception.dart';
+import '../../services/produto_service.dart';
 
 class CadastroProdutoPage extends StatefulWidget {
   Produto produto;
@@ -18,6 +24,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
   final descricao = TextEditingController();
   final valor = TextEditingController();
   final imagem = TextEditingController();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
         key: formKey,
         child: Column(
           children: [
-            FileWidget(urlImagem: "", destino: "produtos"),
+            FileWidget(urlImagem: "", destino: 'produtos'),
             SizedBox(height: espaco),
             WidgetUltil.returnField(
                 "Código: ", codigo, TextInputType.number, null, ""),
@@ -47,12 +54,19 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
                 "Descrição: ", descricao, TextInputType.text, null, ""),
             SizedBox(height: espaco),
             WidgetUltil.returnField(
-                "Valor: ", valor, TextInputType.number, null, ""),
+                "Valor: ",
+                valor,
+                TextInputType.number,
+                [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CurrencyInputFormatter()
+                ],
+                'R\$ 0,00'),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  //registrar();
+                  editarProduto();
                 }
               },
               child: Row(
@@ -69,5 +83,26 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
         ),
       ),
     ));
+  }
+
+  editarProduto() async {
+    setState(() => loading = true);
+
+    try {
+      var produto = Produto();
+      produto.nome = nome.text;
+      produto.descricao = descricao.text;
+      produto.imagem = context.read<FileService>().destino;
+      produto.codigo = codigo.text;
+      produto.dataCadastro = DateTime.now();
+      produto.CoverterValorToDecimal(valor.text);
+      await context.read<ProdutoService>().salvar(produto);
+
+      Navigator.pop(context, true);
+    } on CustomException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
   }
 }
