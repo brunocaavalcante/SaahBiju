@@ -5,7 +5,7 @@ import 'package:app/services/file_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../core/currency_input_formatter.dart';
+import '../../core/masks.dart';
 import '../../models/custom_exception.dart';
 import '../../services/produto_service.dart';
 

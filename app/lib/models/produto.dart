@@ -1,3 +1,5 @@
+import '../core/date_ultils.dart';
+
 class Produto {
   String id = "";
   var nome = "";
@@ -23,7 +25,8 @@ class Produto {
     nome = map['nome'];
     descricao = map['descricao'];
     codigo = map['codigo'];
-    dataCadastro = map['dataCadastro'];
+    dataCadastro =
+        DateUltils.onlyDate(map['dataCadastro'].toDate() as DateTime);
     id = map['id'];
     valor = map['valor'];
     imagem = map['imagem'];
