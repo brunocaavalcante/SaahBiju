@@ -7,7 +7,9 @@ class Produto {
   var codigo = "";
   late DateTime dataCadastro;
   var valor;
-  var imagem = "";
+  var valorCusto;
+  String imagem = "";
+  String refImagem = "";
 
   Map<String, Object?> toJson() {
     return {
@@ -17,7 +19,9 @@ class Produto {
       'dataCadastro': dataCadastro,
       'id': id,
       'valor': valor,
-      'imagem': imagem
+      'valorCusto': valorCusto,
+      'imagem': imagem,
+      'refImagem': refImagem
     };
   }
 
@@ -29,12 +33,14 @@ class Produto {
         DateUltils.onlyDate(map['dataCadastro'].toDate() as DateTime);
     id = map['id'];
     valor = map['valor'];
+    valorCusto = map['valorCusto'];
     imagem = map['imagem'];
+    refImagem = map['refImagem'];
     return this;
   }
 
-  void CoverterValorToDecimal(String valorTxt) {
-    valor = double.tryParse(valorTxt
+  double? CoverterValorToDecimal(String valorTxt) {
+    return double.tryParse(valorTxt
         .replaceRange(0, 3, "")
         .replaceAll(".", "")
         .replaceAll(",", "."));

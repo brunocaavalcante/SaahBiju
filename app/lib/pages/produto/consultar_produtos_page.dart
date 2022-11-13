@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../core/masks.dart';
 import '../../models/produto.dart';
+import 'details_produto_page.dart';
 
 class ConsultarProdutosPage extends StatefulWidget {
   const ConsultarProdutosPage({super.key});
@@ -63,12 +64,17 @@ class _ConsultarProdutosPageState extends State<ConsultarProdutosPage> {
         });
   }
 
-  item(produto) {
+  item(Produto produto) {
     return SizedBox(
         height: 100,
         child: Card(
             margin: const EdgeInsets.only(bottom: 20),
             child: ListTile(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DatailsProdutoPage(produto: produto))),
               title: Text(
                 produto.nome,
                 overflow: TextOverflow.ellipsis,
@@ -87,7 +93,7 @@ class _ConsultarProdutosPageState extends State<ConsultarProdutosPage> {
                   clipBehavior: Clip.antiAlias,
                   decoration: const BoxDecoration(shape: BoxShape.circle),
                   child: produto.imagem == ""
-                      ? Image.asset("imagens/logo_sem_nome.png",
+                      ? Image.asset("imagens/saah-biju-logo-sem-fundo.png",
                           fit: BoxFit.cover)
                       : Image.network(produto.imagem, fit: BoxFit.cover)),
             )));

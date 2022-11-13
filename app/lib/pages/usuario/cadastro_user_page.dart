@@ -1,6 +1,5 @@
 import 'package:app/core/widget_ultil.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import '../../core/date_ultils.dart';
 import '../../core/masks.dart';
@@ -45,7 +44,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
                   "Telefone: ",
                   telefone,
                   TextInputType.phone,
-                  [Masks.telefoneFormatter],
+                  [Masks.telefoneFormatter, Masks.celularFormatter],
                   "(##) ##### - ####"),
               SizedBox(height: espaco),
               WidgetUltil.returnField("Data Nascimento: ", dataNascimento,

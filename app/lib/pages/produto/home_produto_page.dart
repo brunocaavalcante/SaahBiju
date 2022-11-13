@@ -32,8 +32,11 @@ class _HomeProdutoPageState extends State<HomeProdutoPage> {
       ]),
       SizedBox(height: MediaQuery.of(context).size.height * 0.05),
       Row(children: [
-        itenMenu(Icons.new_label, "Cadastrar Produto",
-            CadastroProdutoPage(produto: Produto())),
+        itenMenu(
+            Icons.new_label,
+            "Cadastrar Produto",
+            CadastroProdutoPage(
+                produto: Produto(), operacao: "Cadastro de Produto")),
       ])
     ]);
   }

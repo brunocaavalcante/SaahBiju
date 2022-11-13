@@ -13,19 +13,20 @@ class WidgetUltil {
   }
 
   static Widget returnField(String? label, TextEditingController ctr,
-      TextInputType? type, List<TextInputFormatter>? masks, String hint) {
+      TextInputType? type, List<TextInputFormatter>? masks, String hint,
+      [bool obscureText = false]) {
     return TextFormField(
-      decoration: InputDecoration(
-          labelText: label, border: const OutlineInputBorder(), hintText: hint),
-      controller: ctr,
-      inputFormatters: masks,
-      keyboardType: type,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Campo obrigatório";
-        }
-        return null;
-      },
-    );
+        obscureText: obscureText,
+        decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+            hintText: hint),
+        controller: ctr,
+        inputFormatters: masks,
+        keyboardType: type,
+        validator: (value) {
+          if (value == null || value.isEmpty) return "Campo obrigatorio";
+          return null;
+        });
   }
 }

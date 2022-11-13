@@ -7,9 +7,11 @@ import '../models/custom_exception.dart';
 
 class FileService extends ChangeNotifier {
   String destino = '';
+  String refImage = '';
 
   UploadTask? uploadFile(String destination, File file) {
     try {
+      refImage = destination;
       final ref = FirebaseStorage.instance.ref(destination);
       return ref.putFile(file);
     } on FirebaseException catch (e) {

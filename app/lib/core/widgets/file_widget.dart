@@ -9,7 +9,12 @@ import '../../services/file_service.dart';
 class FileWidget extends StatefulWidget {
   String? urlImagem;
   String? destino;
-  FileWidget({super.key, required this.urlImagem, required this.destino});
+  String? refImage;
+  FileWidget(
+      {super.key,
+      required this.urlImagem,
+      required this.destino,
+      required this.refImage});
 
   @override
   State<FileWidget> createState() => _FileWidgetState();
@@ -58,14 +63,15 @@ class _FileWidgetState extends State<FileWidget> {
   Future uploadFile() async {
     if (file == null) return;
 
-    final String destination;
+    String destination = "";
     var id = DateTime.now().millisecondsSinceEpoch;
 
-    if (widget.urlImagem != "") {
-      destination = widget.urlImagem.toString();
+    if (widget.refImage != "") {
+      destination = widget.refImage.toString();
     } else {
-      destination = "${widget.destino}/${id}";
+      destination = "${widget.destino}/$id";
     }
+
     task = context.read<FileService>().uploadFile(destination, file!);
 
     if (task == null) return;
@@ -77,8 +83,8 @@ class _FileWidgetState extends State<FileWidget> {
     setState(() {});
   }
 
-  Container ContainerImagem() {
-    return Container(
+  SizedBox ContainerImagem() {
+    return SizedBox(
         width: MediaQuery.of(context).size.width * 0.25,
         height: MediaQuery.of(context).size.height * 0.12,
         child: Icon(Icons.add_a_photo,

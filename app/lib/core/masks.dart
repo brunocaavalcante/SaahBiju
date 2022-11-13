@@ -4,6 +4,11 @@ import 'package:intl/intl.dart';
 
 class Masks {
   static var telefoneFormatter = MaskTextInputFormatter(
+      mask: '(##) ####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  static var celularFormatter = MaskTextInputFormatter(
       mask: '(##) #####-####',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
