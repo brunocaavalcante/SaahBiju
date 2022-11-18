@@ -1,3 +1,4 @@
+import 'package:app/models/usuario.dart';
 import 'package:app/pages/usuario/cadastro_user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,10 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CadastroUserPage()));
+                            builder: (context) => CadastroUserPage(
+                                  user: Usuario(),
+                                  operacao: "Cadastro de Usuário",
+                                )));
                   },
                   child: const Text("Ainda não tem conta? Cadastre-se agora."),
                 ),

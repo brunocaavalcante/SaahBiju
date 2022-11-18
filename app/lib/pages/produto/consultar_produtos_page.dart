@@ -95,7 +95,7 @@ class _ConsultarProdutosPageState extends State<ConsultarProdutosPage> {
                   child: produto.imagem == ""
                       ? Image.asset("imagens/saah-biju-logo-sem-fundo.png",
                           fit: BoxFit.cover)
-                      : Image.network(produto.imagem, fit: BoxFit.cover)),
+                      : Image.network(produto.imagem ?? "", fit: BoxFit.cover)),
             )));
   }
 

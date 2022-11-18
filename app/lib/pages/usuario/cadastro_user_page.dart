@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/date_ultils.dart';
 import '../../core/masks.dart';
+import '../../core/widgets/file_widget.dart';
 import '../../models/custom_exception.dart';
 import '../../models/usuario.dart';
+import '../../services/file_service.dart';
 import '../../services/usuario_service.dart';
 
 class CadastroUserPage extends StatefulWidget {
-  const CadastroUserPage({super.key});
+  String operacao = "";
+  Usuario user;
+  CadastroUserPage({super.key, required this.user, required this.operacao});
 
   @override
   State<CadastroUserPage> createState() => _CadastroUserPageState();
@@ -24,11 +28,23 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
   final confirmSenha = TextEditingController();
 
   @override
+  void initState() {
+    if (widget.operacao.contains("Editar")) {
+      nome.text = widget.user.name ?? "";
+      email.text = widget.user.email ?? "";
+      dataNascimento.text =
+          DateUltils.formatarData(widget.user.dataNascimento) ?? "";
+      telefone.text = widget.user.telefone ?? "";
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double? espaco = 10;
 
     return Scaffold(
-      appBar: WidgetUltil.barWithArrowBackIos(context, "Cadastro de Usuário"),
+      appBar: WidgetUltil.barWithArrowBackIos(context, widget.operacao),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(10),
@@ -36,6 +52,10 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           key: formKey,
           child: Column(
             children: [
+              FileWidget(
+                  urlImagem: widget.user.photo,
+                  destino: 'usuarios',
+                  refImage: widget.user.refPhoto),
               SizedBox(height: espaco),
               WidgetUltil.returnField(
                   "Nome: ", nome, TextInputType.name, null, ""),
@@ -89,7 +109,23 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
       usuario.senha = senha.text;
       usuario.confirmSenha = confirmSenha.text;
       usuario.dataNascimento = DateUltils.stringToDate(dataNascimento.text);
-      await Provider.of<UserService>(context, listen: false).registrar(usuario);
+      usuario.photo = context.read<FileService>().destino == ""
+          ? widget.user.photo
+          : context.read<FileService>().destino;
+      usuario.refPhoto = context.read<FileService>().refImage == ""
+          ? widget.user.refPhoto
+          : context.read<FileService>().refImage;
+
+      if (widget.operacao.contains("Cadastro")) {
+        await Provider.of<UserService>(context, listen: false)
+            .registrar(usuario);
+      }
+
+      if (widget.operacao.contains("Editar")) {
+        await Provider.of<UserService>(context, listen: false)
+            .atualizar(usuario);
+      }
+
       Navigator.pop(context);
     } on CustomException catch (e) {
       ScaffoldMessenger.of(context)

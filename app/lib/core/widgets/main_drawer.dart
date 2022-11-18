@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../pages/home_page.dart';
 import '../../pages/produto/home_produto_page.dart';
+import '../../pages/usuario/meu_perfil_page.dart';
 import '../../services/usuario_service.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -95,16 +96,10 @@ class _MainDrawerState extends State<MainDrawer> {
                     title: const Text("Meu Perfil",
                         style: TextStyle(fontSize: 18)),
                     onTap: () async {
-                      /* Usuario usuario =
-                          await auth.obterUsuarioPorId(auth.usuario!.uid);
-                      if (usuario.name != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MeuPerfil(
-                                      usuario: usuario,
-                                    )));
-                      }*/
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MeuPerfilPage()));
                     }),
                 ListTile(
                   leading: const Icon(Icons.arrow_back_ios_new_rounded,

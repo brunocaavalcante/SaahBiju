@@ -132,7 +132,6 @@ class _CadastroProdutoPageState extends State<CadastroProdutoPage> {
           ? widget.produto.refImagem
           : context.read<FileService>().refImage;
       produto.codigo = codigo.text;
-      produto.dataCadastro = DateTime.now();
       produto.valor = produto.CoverterValorToDecimal(valor.text);
       produto.valorCusto = produto.CoverterValorToDecimal(valorCusto.text);
       produto.id = widget.produto.id;

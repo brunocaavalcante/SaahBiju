@@ -50,7 +50,7 @@ class _DatailsProdutoPageState extends State<DatailsProdutoPage> {
       child: widget.produto.imagem == ""
           ? Image.asset("imagens/saah-biju-logo-sem-fundo.png",
               fit: BoxFit.cover)
-          : Image.network(widget.produto.imagem, fit: BoxFit.cover),
+          : Image.network(widget.produto.imagem ?? "", fit: BoxFit.cover),
     );
   }
 

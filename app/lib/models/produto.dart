@@ -8,8 +8,8 @@ class Produto {
   late DateTime dataCadastro;
   var valor;
   var valorCusto;
-  String imagem = "";
-  String refImagem = "";
+  String? imagem = "";
+  String? refImagem = "";
 
   Map<String, Object?> toJson() {
     return {

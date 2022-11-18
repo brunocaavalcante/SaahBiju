@@ -28,6 +28,10 @@ class UserService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<DocumentSnapshot<Object?>> obterUsuarioPorId(String? id) async {
+    return users.doc(id).get();
+  }
+
   registrar(Usuario usuario) async {
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(
@@ -40,6 +44,36 @@ class UserService extends ChangeNotifier {
 
       if (auth.currentUser != null) {
         await users.doc(usuario.authId).set(usuario.toJson()).catchError(
+            (error) => throw CustomException(
+                "ocorreu um erro ao cadastrar tente novamente"));
+      }
+      _getUser();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw CustomException('A senha é muito fraca!');
+      } else if (e.code == 'email-already-in-use') {
+        throw CustomException('Este email já está cadastrado');
+      } else if (e.code == 'unknown') {
+        throw CustomException('Senha inválida');
+      } else if (e.code == "invalid-email") {
+        throw CustomException('Email inválido!');
+      } else {
+        throw CustomException('Erro ao cadastrar, tente novamente!');
+      }
+    }
+  }
+
+  atualizar(Usuario usuario) async {
+    try {
+      if (usuario.senha != usuario.confirmSenha) {
+        throw CustomException('As senhas são diferentes!');
+      }
+      var user = auth.currentUser;
+      user?.updateDisplayName(usuario.name);
+      user?.updatePhotoURL(usuario.photo);
+      usuario.id = user!.uid;
+      if (auth.currentUser != null) {
+        await users.doc(usuario.id).update(usuario.toJson()).catchError(
             (error) => throw CustomException(
                 "ocorreu um erro ao cadastrar tente novamente"));
       }

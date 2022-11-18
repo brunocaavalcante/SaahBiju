@@ -8,7 +8,8 @@ class Usuario {
   var dataNascimento;
   var id;
   bool? check = false;
-  String? photo;
+  String photo = "";
+  String refPhoto = "";
 
   Map<String, Object?> toJson() {
     return {
@@ -17,7 +18,8 @@ class Usuario {
       'telefone': telefone,
       'id': id,
       'dataNascimento': dataNascimento,
-      'photo': photo
+      'photo': photo,
+      'refPhoto': refPhoto
     };
   }
 
@@ -27,6 +29,7 @@ class Usuario {
     email = map['email'] ?? "";
     telefone = map['telefone'] ?? "";
     photo = map['photo'] ?? "";
+    refPhoto = map['refPhoto'] ?? "";
     if (map['dataNascimento'] != null) {
       dataNascimento = (map['dataNascimento']).toDate();
     }
